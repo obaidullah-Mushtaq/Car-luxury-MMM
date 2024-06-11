@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        form {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"],
+        input[type="password"],
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        .message {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+<form id="login-form">
+    <input type="text" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button type="submit">Login</button>
+    <div id="message" class="message"></div>
+</form>
+
+<script>
+    document.getElementById('login-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const messageElement = document.getElementById('message');
+
+        try {
+            const response = await fetch('http://localhost:3000/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                messageElement.textContent = 'Login successful!';
+                messageElement.className = 'message success';
+                console.log('JWT Token:', data.accessToken);
+            } else {
+                messageElement.textContent = 'Login failed: ' + data;
+                messageElement.className = 'message error';
+            }
+            messageElement.style.display = 'block';
+        } catch (error) {
+            messageElement.textContent = 'An error occurred: ' + error.message;
+            messageElement.className = 'message error';
+            messageElement.style.display = 'block';
+        }
+    });
+</script>
+</body>
+</html>

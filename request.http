@@ -1,0 +1,34 @@
+GET http://localhost:3000/api/auth/users
+
+Login with admin credentials
+
+
+### Anmelden und Token erhalten ###
+
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+{
+  "email": "admin@fruits.at",
+  "password": "pw4admin"
+}
+
+### Get All Users Request
+GET http://localhost:3000/api/auth/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYWRtaW5AZnJ1aXRzLmF0Iiwicm9sZSI6ImFkbWluIn0sImV4cCI6MTcxNzMyODE1OC43MTQsImlhdCI6MTcxNzMyNzI1OH0.CDCnl2SSfVvz73sUXUe9Eq5yrYnxYVLDIiKjNluQgV0
+
+### Signup Request###
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "newuser@example.com",
+  "password": "password123",
+  "fullName": "New User",
+  "role": "user"
+}
+
+
+
+
+
+
